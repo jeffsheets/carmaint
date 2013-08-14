@@ -15,6 +15,14 @@ public class Make implements java.io.Serializable {
 	private Long id;
 	
 	private String name;
+	
+	public Make() {
+		//default
+	}
+	
+	public Make(String name) {
+		this.name = name;
+	}
 
 	public String getName() {
 		return name;
