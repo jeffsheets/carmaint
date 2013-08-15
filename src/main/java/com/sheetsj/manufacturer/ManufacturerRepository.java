@@ -1,6 +1,4 @@
-package com.sheetsj.car;
-
-import java.util.List;
+package com.sheetsj.manufacturer;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,21 +9,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional(readOnly = true)
-public class CarRepository {
+public class ManufacturerRepository {
 	
 	@PersistenceContext
 	private EntityManager entityManager;
 	
 	@Transactional
-	public Car save(Car car) {
-		entityManager.persist(car);
-		return car;
+	public Manufacturer save(Manufacturer make) {
+		entityManager.persist(make);
+		return make;
 	}
 	
-	public List<Car> findByModel(String model) {
+	public Manufacturer findByName(String name) {
 		try {
-			return entityManager.createQuery("select c from Car c where c.model = :model", Car.class)
-					.setParameter("model", model).getResultList();
+			return entityManager.createQuery("select m from Manufacturer m where m.name = :name", Manufacturer.class)
+					.setParameter("name", name)
+					.getSingleResult();
 		} catch (PersistenceException e) {
 			return null;
 		}

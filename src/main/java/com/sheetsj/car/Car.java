@@ -9,6 +9,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.sheetsj.account.Account;
+import com.sheetsj.manufacturer.Manufacturer;
 
 @SuppressWarnings("serial")
 @Entity
@@ -23,10 +24,21 @@ public class Car implements java.io.Serializable {
 	
 	@ManyToOne(optional = false)
 	@JoinColumn
-	private Make make;
+	private Manufacturer make;
 	
 	private String model;
 	private String description;
+	
+	public Car(Integer year, Manufacturer make, String model, String description) {
+		this.year = year;
+		this.make = make;
+		this.model = model;
+		this.description = description;
+	}
+	
+	public Car() {
+		//default
+	}
 
 	public Long getId() {
 		return id;
@@ -40,11 +52,11 @@ public class Car implements java.io.Serializable {
 		this.year = year;
 	}
 
-	public Make getMake() {
+	public Manufacturer getMake() {
 		return make;
 	}
 
-	public void setMake(Make make) {
+	public void setMake(Manufacturer make) {
 		this.make = make;
 	}
 

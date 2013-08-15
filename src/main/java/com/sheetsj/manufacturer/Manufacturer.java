@@ -1,4 +1,4 @@
-package com.sheetsj.car;
+package com.sheetsj.manufacturer;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "make")
-public class Make implements java.io.Serializable {
+public class Manufacturer implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue
@@ -16,11 +16,11 @@ public class Make implements java.io.Serializable {
 	
 	private String name;
 	
-	public Make() {
+	public Manufacturer() {
 		//default
 	}
 	
-	public Make(String name) {
+	public Manufacturer(String name) {
 		this.name = name;
 	}
 
