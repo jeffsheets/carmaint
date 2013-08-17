@@ -5,22 +5,13 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import com.sheetsj.config.PersistenceConfig;
-import com.sheetsj.config.RootConfig;
 import com.sheetsj.manufacturer.Manufacturer;
 import com.sheetsj.manufacturer.ManufacturerRepository;
+import com.sheetsj.test.BaseIntegrationTestCase;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader=AnnotationConfigContextLoader.class, classes={RootConfig.class, PersistenceConfig.class})
-@ActiveProfiles("test")
-public class CarRepositoryIT {
+public class CarRepositoryIT extends BaseIntegrationTestCase {
 
 	@Autowired
 	private CarRepository carRepository;
@@ -28,6 +19,11 @@ public class CarRepositoryIT {
 	@Autowired
 	private ManufacturerRepository manufacturerRepository;
 	
+	/**
+	 * Demonstrating old-school JUnit Style assertEquals statements
+	 * 
+	 * Notice the 'backwards' thinking of putting the expected value before the actual value
+	 */
 	@Test
 	public void testFindByModel() {
 		Manufacturer make = new Manufacturer("JunitMotors");
