@@ -1,5 +1,6 @@
 package com.sheetsj.account;
 
+import static com.sheetsj.test.matchers.BusinessValidationExceptionMatchers.expect;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
@@ -41,13 +42,24 @@ public class UserServiceTest {
 	public void shouldThrowExceptionWhenUserNotFound() {
 		// arrange
 		thrown.expect(UsernameNotFoundException.class);
-		thrown.expectMessage("user not found");
+		thrown.expectMessage("not found"); //NOTE: This uses containsString() not equalTo(). Can be confusing!!
 
 		when(accountRepositoryMock.findByEmail("user@example.com")).thenReturn(null);
 		// act
 		userService.loadUserByUsername("user@example.com");
 	}
 
+	@Test
+	public void shouldThrowBusinessExceptionWhenUsernameTooShort() {
+		//Uses custom expect matcher using equalTo() instead of containsString()
+		expect("username", "username.too.short", thrown, "ab");
+
+		userService.loadUserByUsername("ab");
+	}
+
+	/**
+	 * Shows Fest style assertions
+	 */
 	@Test
 	public void shouldReturnUserDetails() {
 		// arrange
