@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sheetsj.manufacturer.Manufacturer;
 import com.sheetsj.manufacturer.ManufacturerRepository;
-import com.sheetsj.test.BaseIntegrationTestCase;
+import com.sheetsj.test.IntegrationTestBaseClass;
 
-public class CarRepositoryIT extends BaseIntegrationTestCase {
+public class CarRepositoryIT extends IntegrationTestBaseClass {
 
 	@Autowired
 	private CarRepository carRepository;
@@ -28,6 +28,8 @@ public class CarRepositoryIT extends BaseIntegrationTestCase {
 	public void testFindByModel() {
 		Manufacturer make = new Manufacturer("JunitMotors");
 		make = manufacturerRepository.save(make);
+
+		List<Car> results0 = carRepository.findByModel("JunitModel");
 		
 		Car car = new Car(2013, make, "JunitModel", "LT FWD 3.6L V6 DOHC 24V");
 		car = carRepository.save(car);

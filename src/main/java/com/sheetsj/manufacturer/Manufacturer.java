@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "make")
+@Table(name = "manufacturer")
 public class Manufacturer implements java.io.Serializable {
 
 	@Id

@@ -11,9 +11,9 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.sheetsj.test.BaseIntegrationTestCase;
+import com.sheetsj.test.IntegrationTestBaseClass;
 
-public class ProviderRepositoryIT extends BaseIntegrationTestCase {
+public class ProviderRepositoryIT extends IntegrationTestBaseClass {
 	@Autowired
 	private ProviderRepository providerRepository;
 
