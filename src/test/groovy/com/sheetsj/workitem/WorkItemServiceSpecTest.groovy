@@ -70,7 +70,7 @@ class WorkItemServiceSpecTest extends Specification {
 		expect: 'findAllByMakeAndYear returns correct results'
 		service.selectWorkItemsByMakeAndYear('ford', '2013', allWorkItems).containsAll allWorkItems[2,4]
 		service.selectWorkItemsByMakeAndYear('ford', '2012', allWorkItems).containsAll allWorkItems[0..1]
-		!service.selectWorkItemsByMakeAndYear('chevy', '2013', allWorkItems)
+		service.selectWorkItemsByMakeAndYear('chevy', '2013', allWorkItems).empty
 		!service.selectWorkItemsByMakeAndYear('ford', '2014', allWorkItems)
 	}
 	
@@ -95,8 +95,42 @@ class WorkItemServiceSpecTest extends Specification {
 		expect: 'findAllByMakeAndYear is called and has correct results'
 		service.findAllByMakeAndYear('ford', '2013').containsAll allWorkItems[2,4]
 		service.findAllByMakeAndYear('ford', '2012').containsAll allWorkItems[0..1]
-		!service.findAllByMakeAndYear('chevy', '2013')
+		service.findAllByMakeAndYear('chevy', '2013').empty
 		!service.findAllByMakeAndYear('ford', '2014')
+	}
+	
+	/** a better pattern */
+	def "findAllByMakeAndYear with many tests at once but multiple blocks"() {
+		given: 'a bunch of work items'
+		List<WorkItem> allWorkItems = buildAllWorkItems()
+		
+		when: 'findAllByMakeAndYear is called for Ford and 2013'
+		def results = service.findAllByMakeAndYear('ford', '2013')
+		
+		then: 'results are correct'
+		1 * workItemRepository.findAll() >> allWorkItems
+		results.containsAll allWorkItems[2,4]
+		
+		when: 'findAllByMakeAndYear is called for Ford and 2012'
+		results = service.findAllByMakeAndYear('ford', '2012')
+		
+		then: 'results are correct'
+		1 * workItemRepository.findAll() >> allWorkItems
+		results.containsAll allWorkItems[0..1]
+		
+		when: 'findAllByMakeAndYear is called for Chevy and 2013'
+		results = service.findAllByMakeAndYear('chevy', '2013')
+		
+		then: 'results are correct'
+		1 * workItemRepository.findAll() >> allWorkItems
+		results.empty
+		
+		when: 'findAllByMakeAndYear is called for Ford and 2014'
+		results = service.findAllByMakeAndYear('ford', '2014')
+		
+		then: 'results are correct'
+		1 * workItemRepository.findAll() >> allWorkItems
+		!results
 	}
 	
 	List<WorkItem> buildAllWorkItems() {
