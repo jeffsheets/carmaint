@@ -29,8 +29,6 @@ public class CarRepositoryIT extends IntegrationTestBaseClass {
 		Manufacturer make = new Manufacturer("JunitMotors");
 		make = manufacturerRepository.save(make);
 
-		List<Car> results0 = carRepository.findByModel("JunitModel");
-		
 		Car car = new Car(2013, make, "JunitModel", "LT FWD 3.6L V6 DOHC 24V");
 		car = carRepository.save(car);
 		
