@@ -12,6 +12,11 @@ import static org.hamcrest.Matchers.*
 
 class WorkItemServiceSpecTest extends Specification {
 	def service = new WorkItemService();
+	def workItemRepository = Mock(WorkItemRepository)
+	
+	def setup() {
+		service.workItemRepository = workItemRepository
+	}
 
 	def "getYearAsString works for simple case"() {
 		given: 'a normal date'
@@ -67,6 +72,31 @@ class WorkItemServiceSpecTest extends Specification {
 		service.selectWorkItemsByMakeAndYear('ford', '2012', allWorkItems).containsAll allWorkItems[0..1]
 		!service.selectWorkItemsByMakeAndYear('chevy', '2013', allWorkItems)
 		!service.selectWorkItemsByMakeAndYear('ford', '2014', allWorkItems)
+	}
+	
+	def "findAllByMakeAndYear works with mocks"() {
+		given: 'a bunch of work items'
+		List<WorkItem> allWorkItems = buildAllWorkItems()
+		
+		when: 'findAllByMakeAndYear is called'
+		def results = service.findAllByMakeAndYear('ford', '2013')
+		
+		then: 'results are correct'
+		1 * workItemRepository.findAll() >> allWorkItems
+		results.containsAll allWorkItems[2,4]
+	}
+	
+	/** not a good pattern. just showing it is possible */
+	def "findAllByMakeAndYear with many tests at once"() {
+		given: 'a bunch of work items'
+		List<WorkItem> allWorkItems = buildAllWorkItems()
+		_ * workItemRepository.findAll() >> allWorkItems
+		
+		expect: 'findAllByMakeAndYear is called and has correct results'
+		service.findAllByMakeAndYear('ford', '2013').containsAll allWorkItems[2,4]
+		service.findAllByMakeAndYear('ford', '2012').containsAll allWorkItems[0..1]
+		!service.findAllByMakeAndYear('chevy', '2013')
+		!service.findAllByMakeAndYear('ford', '2014')
 	}
 	
 	List<WorkItem> buildAllWorkItems() {
