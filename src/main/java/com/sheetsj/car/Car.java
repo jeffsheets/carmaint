@@ -5,10 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import com.sheetsj.account.Account;
 import com.sheetsj.manufacturer.Manufacturer;
 
 @SuppressWarnings("serial")
