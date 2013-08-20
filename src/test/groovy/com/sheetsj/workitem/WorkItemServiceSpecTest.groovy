@@ -11,7 +11,7 @@ import static spock.util.matcher.HamcrestSupport.*
 import static org.hamcrest.Matchers.*
 
 class WorkItemServiceSpecTest extends Specification {
-	def service = new WorkItemService();
+	def service = new WorkItemService()
 	def workItemRepository = Mock(WorkItemRepository)
 	
 	def setup() {
