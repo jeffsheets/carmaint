@@ -142,7 +142,8 @@ public class WorkItemServiceTest {
 		
 		//Uses a spy on the service. Usually recommend refactoring service, but sometimes this is necessary or just easier
 		WorkItem expected = new WorkItem();
-		doReturn(Arrays.asList(expected)).when(service).selectWorkItemsByMakeAndYear("bmw", "2008", allWorkItems);
+		List<WorkItem> expectedList = Arrays.asList(expected);
+		doReturn(expectedList).when(service).selectWorkItemsByMakeAndYear("bmw", "2008", allWorkItems);
 		
 		Collection<WorkItem> results = service.findAllByMakeAndYear("bmw", "2008");
 		
