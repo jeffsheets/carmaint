@@ -2,6 +2,8 @@ package com.sheetsj.account;
 
 import static com.sheetsj.test.matchers.BusinessValidationExceptionMatchers.expect;
 import static org.fest.assertions.Assertions.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
@@ -47,6 +49,18 @@ public class UserServiceTest {
 		when(accountRepositoryMock.findByEmail("user@example.com")).thenReturn(null);
 		// act
 		userService.loadUserByUsername("user@example.com");
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenUserNotFound_oldSchool() {
+		when(accountRepositoryMock.findByEmail("user@example.com")).thenReturn(null);
+		
+		try {
+			userService.loadUserByUsername("user@example.com");
+			fail();
+		} catch (UsernameNotFoundException e) {
+			assertThat(true);
+		}
 	}
 
 	@Test
