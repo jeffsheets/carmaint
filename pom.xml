@@ -356,6 +356,7 @@
         </plugins>
         
         
+        <!-- This section only needed to fix a bug in m2e within eclipse -->
     <pluginManagement>
     	<plugins>
 	      <!--This plugin's configuration is used to store Eclipse m2e 
